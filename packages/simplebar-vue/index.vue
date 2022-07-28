@@ -9,11 +9,7 @@
           <div
             class="simplebar-content-wrapper"
             ref="scrollElement"
-            v-on="{
-              ...($listeners.scroll && {
-                scroll: $listeners.scroll,
-              })
-            }"
+            @scroll="$emit('scroll', $event)"
           >
             <div class="simplebar-content" ref="contentElement">
               <slot></slot>
@@ -37,6 +33,7 @@ import SimpleBar from 'simplebar';
 
 export default {
   name: 'simplebar-vue',
+  emits: ['scroll'],
   mounted () {
     const options = SimpleBar.getOptions(this.$refs.element.attributes);
     this.SimpleBar = new SimpleBar(this.$refs.element, options);

@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, mount } from '@vue/test-utils';
 import simplebar from '../index.vue';
 
 describe('simplebar', () => {
@@ -49,5 +49,22 @@ describe('simplebar', () => {
       propsData: { 'data-simplebar-auto-hide': 'false' }
     });
     expect(wrapper.vm.SimpleBar.options.autoHide).toEqual(false);
+  });
+
+  // more test setup is required to actually test the interaction (read jsdom)
+  // and ensure the listeners is attached to the actual scrollElement
+  it('emits a scroll listener', async () => {
+    const scrollSpy = jest.fn();
+    const wrapper = mount(simplebar, {
+      attachTo: document.body,
+      listeners: {
+        scroll: scrollSpy
+      }
+    });
+
+    wrapper.vm.$emit('scroll', { x: 0, y: 100 });
+
+    expect(scrollSpy).toHaveBeenCalledTimes(1);
+    expect(scrollSpy).toHaveBeenCalledWith({ x: 0, y: 100 });
   });
 });
