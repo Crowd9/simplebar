@@ -60,5 +60,8 @@
     "hooks": {
       "pre-commit": "lerna run --concurrency 1 --stream precommit"
     }
+  },
+  "resolutions": {
+    "sharp": "^0.30.7"
   }
 }
